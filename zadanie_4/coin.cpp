@@ -1,91 +1,164 @@
 #include "coin.h"
 
-int** createMatrix(int N, int M) {
-    int** matrix = new int*[N];
-    for (int i = 0; i < N; i++) {
-        matrix[i] = new int[M];
+int** createMatrix(int n, int m){
+    int** a = new int*[n];
+    for (int i = 0; i < n; i++){
+        a[i] = new int[m];
     }
-    return matrix;
+    return a;
 }
 
-void deleteMatrix(int** matrix, int N) {
-    for (int i = 0; i < N; i++) {
-        delete[] matrix[i];
+void deleteMatrix(int** a, int n){
+    for (int i = 0; i < n; i++){
+        delete[] a[i];
     }
-    delete[] matrix;
+    delete[] a;
 }
 
-void inputMatrix(int** matrix, int N, int M) {
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < M; j++) {
-            cin >> matrix[i][j];
+void zapolitMatrix(int** a, int n, int m){
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < m; j++){
+            cin >> a[i][j];
         }
     }
 }
 
-void printMatrix(int** matrix, int N, int M) {
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < M; j++) {
-            cout << matrix[i][j] << " ";
+void printMatrix(int** a, int n, int m){
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < m; j++){
+            cout << a[i][j] << " ";
         }
         cout << endl;
     }
 }
 
-int distanceCells(pair<int, int> a, pair<int, int> b) {
-    return abs(a.first - b.first) + abs(a.second - b.second);
+int rastMinHodov(int stroka1, int stolb1, int stroka2, int stolb2){
+    int raznostStrok = stroka1 - stroka2;
+    int raznostStolb = stolb1 - stolb2;
+    if (raznostStrok < 0){
+        raznostStrok = -raznostStrok;
+    }
+    if (raznostStolb < 0){
+        raznostStolb = -raznostStolb;
+    }
+    return raznostStrok + raznostStolb;
 }
 
-int findMinPairing(vector<pair<int, int>>& cells, vector<int>& used) {
-    int first = -1;
-    for (int i = 0; i < cells.size(); i++) {
-        if (!used[i]) {
-            first = i;
-            break;
+int findNepravilnieKletki(int** a, int n, int m, int verh, int* stroki, int* stolbci){
+    int count{};
+    int niz = 1 - verh;
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < m; j++){
+            int nado{};
+            if (i < n / 2) {
+                nado = verh;
+            } else {
+                nado = niz;
+            }
+            if (a[i][j] != nado){
+                stroki[count] = i;
+                stolbci[count] = j;
+                count++;
+            }
         }
     }
-    if (first == -1) {
-        return 0;
-    }
-    used[first] = 1;
-    int best = 1000000;
-    for (int i = 0; i < cells.size(); i++) {
-        if (!used[i]) {
-            used[i] = 1;
-            int current = distanceCells(cells[first], cells[i]) + findMinPairing(cells, used);
-            best = min(best, current);
-            used[i] = 0;
+    return count;
+}
+
+int findFirstFalseEl(int* used, int count){
+    int indOfEl = -1;
+    for (int i = 0; i < count; i++){
+        if (used[i] == 0 && indOfEl == -1){
+            indOfEl = i;
         }
     }
-    used[first] = 0;
+    return indOfEl;
+}
+
+int podborPar(int* stroki, int* stolbci, int* used, int count){
+    int first = findFirstFalseEl(used, count);
+    int best {};
+    if (first != -1){
+        used[first] = 1;
+        bool isVariant = false;
+        for (int i = 0; i < count; i++){
+            if (used[i] == 0) {
+                used[i] = 1;
+                int cena = rastMinHodov(stroki[first], stolbci[first], stroki[i], stolbci[i]);
+                int tek = cena + podborPar(stroki, stolbci, used, count);
+                if (!isVariant || tek < best) {
+                    best = tek;
+                    isVariant = true;
+                }
+                used[i] = 0;
+            }
+        }
+        used[first] = 0;
+    }
     return best;
 }
 
-int minMovesForVariant(int** matrix, int N, int M, int topValue) {
-    vector<pair<int, int>> cells;
-    int bottomValue = 1 - topValue;
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < M; j++) {
-            int need;
-            if (i < N / 2) {
-                need = topValue;
-            } else {
-                need = bottomValue;
-            }
-            if (matrix[i][j] != need) {
-                cells.push_back({i, j});
-            }
+int minHodovRisunka(int** a, int n, int m, int verh){
+    int* stroki = new int[n * m];
+    int* stolbci = new int[n * m];
+    int count = findNepravilnieKletki(a, n, m, verh, stroki, stolbci);
+    int otvet {-1};
+    if (count % 2 == 0){
+        int* used = new int[count];
+        for (int i = 0; i < count; i++){
+            used[i] = 0;
         }
+        otvet = podborPar(stroki, stolbci, used, count);
+        delete[] used;
     }
-    if (cells.size() % 2 != 0) {
-        return 1000000;
-    }
-    vector<int> used(cells.size(), 0);
-    return findMinPairing(cells, used);
+    delete[] stroki;
+    delete[] stolbci;
+    return otvet;
 }
 
-int minMovesToHalf(int** matrix, int N, int M) {
-    int result1 = minMovesForVariant(matrix, N, M, 0);
-    int result2 = minMovesForVariant(matrix, N, M, 1);
-    return min(result1, result2);
+int minHodovDoPolovini(int** a, int n, int m){
+    int otvet1 = minHodovRisunka(a, n, m, 0);
+    int otvet2 = minHodovRisunka(a, n, m, 1);
+    int otvet = -1;
+    if (otvet1 != -1 && otvet2 != -1){
+        otvet = min(otvet1, otvet2);
+    } else if (otvet1 != -1){
+        otvet = otvet1;
+    } else if (otvet2 != -1){
+        otvet = otvet2;
+    }
+    return otvet;
+}
+
+int findBestVerh(int** a, int n, int m){
+    int otvet1 = minHodovRisunka(a, n, m, 0);
+    int otvet2 = minHodovRisunka(a, n, m, 1);
+    int verh = -1;
+    if (otvet1 != -1 && otvet2 != -1){
+        if (otvet1 <= otvet2){
+            verh = 0;
+        } else {
+            verh = 1;
+        }
+    } else if (otvet1 != -1){
+        verh = 0;
+    } else if (otvet2 != -1){
+        verh = 1;
+    }
+
+    return verh;
+}
+
+void printItogMatrix(int n, int m, int verh){
+    int niz = 1 - verh;
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < m; j++){
+            if (i < n / 2){
+                cout << verh << " ";
+            } else {
+                cout << niz << " ";
+            }
+        }
+        cout << endl;
+    }
 }

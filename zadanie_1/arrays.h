@@ -5,30 +5,20 @@
 #include <chrono>
 #include <random>
 #include <vector>
+#include <cstdlib>
+#include <string>
 using namespace std;
+//zadanie 1
+int** create(int m, int n);
+void deletee(int** matr, int m);
+void zapolnit(int** matr, int m, int n, int minZn, int maxZn);
+void print(int** matr, int m, int n);
+int** pomenyatMinMaxStrok(int** matr, int m, int n);
 
-int** createMatrix(int M, int N);
-void deleteMatrix(int** matrix, int M);
-void fillRandom(int** matrix, int M, int N, int minVal, int maxVal);
-void printMatrix(int** matrix, int M, int N);
-int** switchMinMaxInRows(int** matrix, int M, int N);
-vector<int> createDiffArray(int** matrix, int M, int N);
-int findMaxDiffRow(const vector<int>& diff);
-int digitSum(int number);
-int findMaxDigitSumRow(int** matrix, int M, int N);
+vector<int> createRaznostei(int** matr, int m, int n);
+int findStrokMax(const vector<int>& raznost);
 
-// Life Game MOYA LUBIMAYA
+//zadani 2
+int sumCifr(int chislo);
+int findMaxSumCifrStrok(int** matr, int m, int n);
 
-int** createField(int rows, int cols);
-void deleteField(int** field, int rows);
-void clearField(int** field, int rows, int cols);
-void fillRandom(int** field, int rows, int cols);
-void printField(int** field, int rows, int cols);
-void clearConsole();
-int countNeighbors(int** field, int rows, int cols, int row, int col);
-int** nextGeneration(int** field, int rows, int cols);
-void setBlock(int** field, int row, int col);
-void setBeehive(int** field, int row, int col);
-void setLoaf(int** field, int row, int col);
-void setBoat(int** field, int row, int col);
-void runAnimation(int** field, int rows, int cols, int generations, int delayMs);

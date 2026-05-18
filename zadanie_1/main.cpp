@@ -5,52 +5,38 @@
 using namespace std;
 
 int main() {
-    // задание 1
-    int M{};
-    int N{};
+    // Zadanie 1 предложение 1
+    int m {};
+    int n {};
     cout << "Введите M: ";
-    cin >> M;
+    cin >> m;
     cout << "Введите N: ";
-    cin >> N;
-    int** matrix1 = createMatrix(M, N);
-    fillRandom(matrix1, M, N, 10, 50);
-    cout << "\nМатрица 1 до изменения:\n";
-    printMatrix(matrix1, M, N);
-    matrix1 = switchMinMaxInRows(matrix1, M, N);
-    cout << "\nМатрица 1 после изменения:\n";
-    printMatrix(matrix1, M, N);
-    vector<int> diff = createDiffArray(matrix1, M, N);
+    cin >> n;
+    int** matr1 = create(m, n);
+    zapolnit(matr1, m, n, 10, 50);
+    cout << "\nМатрица 1 до\n";
+    print(matr1, m, n);
+    pomenyatMinMaxStrok(matr1, m, n);
+    cout << "\nМатрица 1 после\n";
+    print(matr1, m, n);
+    //zad 1 предлож 2
+
+    vector<int> razn = createRaznostei(matr1, m, n);
     cout << "\nМассив разностей:\n";
-    for (int value : diff) {
-        cout << value << " ";
+    for (int elem : razn) {
+        cout << elem << " ";
     }
     cout << endl;
-    int maxDiffRow = findMaxDiffRow(diff);
-    cout << "Номер строки с максимальной разностью: "<< maxDiffRow + 1 << endl;
-    deleteMatrix(matrix1, M);
-    // Задание 2
-    int** matrix2 = createMatrix(M, N);
-    fillRandom(matrix2, M, N, 100, 200);
+    int nomerStr = findStrokMax(razn);
+    cout << "Номер строки с максимальной разностью: " << nomerStr + 1 << endl;
+    deletee(matr1, m);
+    // Zadanie 2
+    int** matr2 = create(m, n);
+    zapolnit(matr2, m, n, 100, 200);
     cout << "\nМатрица 2:\n";
-    printMatrix(matrix2, M, N);
-    int maxDigitSumRow = findMaxDigitSumRow(matrix2, M, N);
-    cout << "Номер строки с наибольшей суммой цифр: "<< maxDigitSumRow + 1 << endl;
-    deleteMatrix(matrix2, M);
-    // Задание 3 
-    int rows{};
-    int cols{};
-    cout << "Введите количество строк: ";
-    cin >> rows;
-    cout << "Введите количество столбцов: ";
-    cin >> cols;
-    int** stableField = createField(rows, cols);
-    setBlock(stableField, 2, 2);
-    setBeehive(stableField, 2, 10);
-    setLoaf(stableField, 8, 2);
-    setBoat(stableField, 8, 12);
-    runAnimation(stableField, rows, cols, 10, 700);
-    int** randomField = createField(rows, cols);
-    fillRandom(randomField, rows, cols);
-    runAnimation(randomField, rows, cols, 100, 300);
+    print(matr2, m, n);
+    int maxSumStr = findMaxSumCifrStrok(matr2, m, n);
+    cout << "Номер строки с наибольшей суммой цифр: " << maxSumStr + 1 << endl;
+    deletee(matr2, m);
     return 0;
 }

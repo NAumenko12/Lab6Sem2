@@ -1,22 +1,20 @@
 #include "arrays.h"
 
-#include "arrays.h"
+#include <algorithm>
 
-int** switchMinMaxInRows(int** matrix, int M, int N) {
-    for (int i = 0; i < M; i++) {
-        int minIndex {};
-        int maxIndex {};
-        for (int j = 1; j < N; j++) {
-            if (matrix[i][j] < matrix[i][minIndex]) {
-                minIndex = j;
-            }
-            if (matrix[i][j] > matrix[i][maxIndex]) {
-                maxIndex = j;
-            }
+int** pomenyatMinMaxStrok(int** matr, int m, int n){
+    for (int i = 0; i < m; i++){
+        int minInd = 0;
+        int maxInd = 0;
+        for (int j = 1; j < n; j++) {
+            if (matr[i][j] < matr[i][minInd]){
+                minInd = j;
+            } 
+            if (matr[i][j] > matr[i][maxInd]){
+                maxInd = j;
+            } 
         }
-        int temp = matrix[i][minIndex];
-        matrix[i][minIndex] = matrix[i][maxIndex];
-        matrix[i][maxIndex] = temp;
+        swap(matr[i][minInd], matr[i][maxInd]);
     }
-    return matrix;
+    return matr;
 }

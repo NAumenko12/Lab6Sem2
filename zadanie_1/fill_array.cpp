@@ -1,33 +1,35 @@
 #include "arrays.h"
 
-int** createMatrix(int M, int N){
-    int** matrix = new int*[M];
-    for (int i = 0; i < M; i++){
-        matrix[i] = new int[N];
+int** create(int m, int n) {
+    int** matr = new int*[m];
+    for (int i = 0; i < m; i++){
+        matr[i] = new int[n];
     }
-    return matrix;
+    return matr;
 }
-void deleteMatrix(int** matrix, int M){
-    for (int i = 0; i < M; i++) {
-        delete[] matrix[i];
+
+void deletee(int** matr, int m){
+    for (int i = 0; i < m; i++){
+        delete[] matr[i];
     }
-    delete[] matrix;
+    delete[] matr;
 }
-void fillRandom(int** matrix, int M, int N, int minVal, int maxVal){
+
+void zapolnit(int** matr, int m, int n, int minZn, int maxZn) {
     static random_device rd;
     static ranlux24_base gen(rd());
-    uniform_int_distribution<int> dist(minVal, maxVal);
-    for (int i = 0; i < M; i++){
-        for (int j = 0; j < N; j++){
-            matrix[i][j] = dist(gen);
+    uniform_int_distribution<int> dist(minZn, maxZn);
+    for (int i = 0; i < m; i++){
+        for (int j = 0; j < n; j++){
+            matr[i][j] = dist(gen);
         }
     }
 }
 
-void printMatrix(int** matrix, int M, int N){
-    for (int i = 0; i < M; i++) {
-        for (int j = 0; j < N; j++) {
-            cout << matrix[i][j] << " ";
+void print(int** matr, int m, int n){
+    for (int i = 0; i < m; i++){
+        for (int j = 0; j < n; j++){
+            cout << matr[i][j] << " ";
         }
         cout << endl;
     }
