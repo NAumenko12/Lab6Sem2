@@ -23,6 +23,10 @@ int main() {
     cout << "Boat" << endl;
     zapuskAnim(pole, m, n, pokoleniya, pauza);
     pole = createPole(m, n);
+    Glider(pole, 1, 1);
+    cout << "Glider" << endl;
+    zapuskAnim(pole, m, n, 25, pauza);
+    pole = createPole(m, n);
     zapolnitRandom(pole, m, n);
     cout << "Random" << endl;
     zapuskAnim(pole, m, n, 30, pauza);

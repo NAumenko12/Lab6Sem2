@@ -1,8 +1,4 @@
-#include <iostream>
-#include <vector>
 #include "arrays.h"
-
-using namespace std;
 
 int main() {
     // Zadanie 1 предложение 1

@@ -32,3 +32,11 @@ void Boat(int** pole, int stroka, int stolb){
     pole[stroka + 1][stolb + 2] = ALIVE;
     pole[stroka + 2][stolb + 1] = ALIVE;
 }
+
+void Glider(int** pole, int stroka, int stolb){
+    pole[stroka][stolb + 1] = ALIVE;
+    pole[stroka + 1][stolb + 2] = ALIVE;
+    pole[stroka + 2][stolb] = ALIVE;
+    pole[stroka + 2][stolb + 1] = ALIVE;
+    pole[stroka + 2][stolb + 2] = ALIVE;
+}

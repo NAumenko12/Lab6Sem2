@@ -1,7 +1,5 @@
 #include "arrays.h"
 
-#include <algorithm>
-
 int** pomenyatMinMaxStrok(int** matr, int m, int n){
     for (int i = 0; i < m; i++){
         int minInd = 0;

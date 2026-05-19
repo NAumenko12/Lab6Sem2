@@ -7,6 +7,8 @@
 #include <vector>
 #include <cstdlib>
 #include <string>
+#include <algorithm>
+
 using namespace std;
 //zadanie 1
 int** create(int m, int n);

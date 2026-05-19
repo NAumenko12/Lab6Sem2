@@ -21,5 +21,6 @@ void Block(int** pole, int stroka, int stolb);
 void Beehive(int** pole, int stroka, int stolb);
 void Loaf(int** pole, int stroka, int stolb);
 void Boat(int** pole, int stroka, int stolb);
+void Glider(int** pole, int stroka, int stolb);
 void clearKonsol();
 void zapuskAnim(int** pole, int m, int n, int pokoleniya, int pauza);
