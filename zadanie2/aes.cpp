@@ -12,28 +12,6 @@ vector<Byte> generateRandomBytes(int size){
     return data;
 }
 
-void saveBytesToFile(const vector<Byte>& data, const string& filename){
-    ofstream file(filename);
-    if (file.is_open()){
-        file << bytesToHex(data);
-        file.close();
-    } else {
-        cout << "Не удалось записать файл: " << filename << endl;
-    }
-}
-
-vector<Byte> readBytesFromFile(const string& filename){
-    ifstream file(filename);
-    string hexText;
-    if (file.is_open()){
-        file >> hexText;
-        file.close();
-    }else{
-        cout << "Не удалось открыть файл " << filename << endl;
-    }
-    return hexToBytes(hexText);
-}
-
 void addPadding(vector<Byte>& data){
     int count = BLOCK_SIZE - ((int)data.size() % BLOCK_SIZE);
     if (count == 0){

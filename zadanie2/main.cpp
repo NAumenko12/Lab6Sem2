@@ -31,14 +31,15 @@ int main(){
     cout << endl << "Шифрование:" << endl;
     vector<Byte> encrypted = encryptCBC(textBytes, key, iv);
     string encryptedHex = bytesToHex(encrypted);
-    writeTextToFile("encrypted.txt", encryptedHex);
+    writeTextToFile("шифровка.txt", encryptedHex);
     cout << endl;
     cout << "Зашифрованный текст HEX: " << encryptedHex << endl;
     cout << endl << "Расшифрование:" << endl;
     vector<Byte> decrypted = decryptCBC(encrypted, key, iv);
     string decryptedText = bytesToString(decrypted);
-    writeTextToFile("decrypted.txt", decryptedText);
+    writeTextToFile("расшифровка.txt", decryptedText);
     cout << "Расшифрованный текст: " << decryptedText << endl;
-    cout << "Расшифрованный текст записан в файл decrypted.txt" << endl;
+    cout << "Зашифрованный текст записан в файл шифровка.txt" << endl;
+    cout << "Расшифрованный текст записан в файл расшифровка.txt" << endl;
     return 0;
 }

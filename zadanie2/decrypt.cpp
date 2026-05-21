@@ -3,19 +3,16 @@
 void decryptBlock(const Byte input[16], Byte output[16], const vector<vector<Byte>>& roundKeys, int blockNumber){
     Byte state[4][4];
     bytesToState(input, state);
-    printState(state, "\nРасшифрование блока " + to_string(blockNumber) + ". Начальное состояние State ");
     addRoundKey(state, roundKeys[10]);
     for (int round = 9; round >= 1; round--){
         invShiftRows(state);
         invSubBytes(state);
         addRoundKey(state, roundKeys[round]);
         invMixColumns(state);
-        printState(state, "После раунда расшифрования " + to_string(round) + " ");
     }
     invShiftRows(state);
     invSubBytes(state);
     addRoundKey(state, roundKeys[0]);
-    printState(state, "Финальное расшифрованное состояние State ");
     stateToBytes(state, output);
 }
 

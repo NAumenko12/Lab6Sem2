@@ -52,6 +52,15 @@ void printKorni(double* x, int n){
     }
 }
 
+void copySistem(double** fromA, double* fromB, double** toA, double* toB, int n){
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < n; j++){
+            toA[i][j] = fromA[i][j];
+        }
+        toB[i] = fromB[i];
+    }
+}
+
 int findGlavStroku(double** a, int n, int k){
     int maxStr = k;
     for (int i = k + 1; i < n; i++){
